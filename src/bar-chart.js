@@ -1,9 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import {
-  Svg,
-  Rect
-} from 'react-native-svg'
+  Svg
+} from 'expo'
 import AbstractChart from './abstract-chart'
 
 const barWidth = 32
@@ -15,7 +14,7 @@ class BarChart extends AbstractChart {
       const barHeight = height / 4 * 3 * ((x - Math.min(...data)) / this.calcScaler(data))
       const barWidth = 32
       return (
-        <Rect
+        <Svg.Rect
           key={Math.random()}
           x={(paddingRight + (i * (width - paddingRight) / data.length) + (barWidth / 2))}
           y={(((height / 4 * 3) - barHeight) + paddingTop)}
@@ -31,7 +30,7 @@ class BarChart extends AbstractChart {
     return data.map((x, i) => {
       const barHeight = height / 4 * 3 * ((x - Math.min(...data)) / this.calcScaler(data))
       return (
-        <Rect
+        <Svg.Rect
           key={Math.random()}
           x={(paddingRight + (i * (width - paddingRight) / data.length)) + (barWidth / 2)}
           y={(((height / 4 * 3) - barHeight) + paddingTop)}
@@ -61,7 +60,7 @@ class BarChart extends AbstractChart {
             ...config,
             ...this.props.chartConfig
           })}
-          <Rect
+          <Svg.Rect
             width="100%"
             height={height}
             rx={borderRadius}

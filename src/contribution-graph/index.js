@@ -2,11 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
 import {
-  Svg,
-  G,
-  Text,
-  Rect
-} from 'react-native-svg'
+  Svg
+} from 'expo'
 import _ from 'lodash'
 import AbstractChart from "../abstract-chart"
 import { DAYS_IN_WEEK, MILLISECONDS_IN_ONE_DAY, MONTH_LABELS } from './constants'
@@ -199,7 +196,7 @@ class ContributionGraph extends AbstractChart {
     const [x, y] = this.getSquareCoordinates(dayIndex)
     const { squareSize = SQUARE_SIZE } = this.props
     return (
-      <Rect
+      <Svg.Rect
         key={index}
         width={squareSize}
         height={squareSize}
@@ -234,7 +231,7 @@ class ContributionGraph extends AbstractChart {
       const endOfWeek = shiftDate(this.getStartDateWithEmptyDays(), (weekIndex + 1) * DAYS_IN_WEEK)
       const [x, y] = this.getMonthLabelCoordinates(weekIndex)
       return (endOfWeek.getDate() >= 1 && endOfWeek.getDate() <= DAYS_IN_WEEK) ? (
-        <Text
+        <Svg.Text
           key={weekIndex}
           fontSize={12}
           x={x + paddingLeft}
@@ -242,7 +239,7 @@ class ContributionGraph extends AbstractChart {
           fill={this.props.chartConfig.color(0.5)}
         >
           {MONTH_LABELS[endOfWeek.getMonth()]}
-        </Text>
+        </Svg.Text>
       ) : null
     })
   }
@@ -265,18 +262,18 @@ class ContributionGraph extends AbstractChart {
             height: this.props.height,
             ...this.props.chartConfig
           })}
-          <Rect
+          <Svg.Rect
             width="100%"
             height={this.props.height}
             rx={borderRadius}
             ry={borderRadius}
             fill="url(#backgroundGradient)"/>
-          <G>
+          <Svg.G>
             {this.renderMonthLabels()}
-          </G>
-          <G>
+          </Svg.G>
+          <Svg.G>
             {this.renderAllWeeks()}
-          </G>
+          </Svg.G>
         </Svg>
       </View>
     )

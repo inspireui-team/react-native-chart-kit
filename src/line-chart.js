@@ -1,14 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import {
-  Svg,
-  Circle,
-  Polygon,
-  Polyline,
-  Path,
-  Rect,
-  G
-} from 'react-native-svg'
+  Svg
+} from 'expo'
 import AbstractChart from './abstract-chart'
 
 class LineChart extends AbstractChart {
@@ -19,7 +13,7 @@ class LineChart extends AbstractChart {
     data.map((dataset,index)=>{
       dataset.data.map((x, i) => {
         output.push (
-          <Circle
+          <Svg.Circle
             key={Math.random()}
             cx={paddingRight + (i * (width - paddingRight) / dataset.data.length)}
             cy={((height / 4 * 3 * (1 - ((x - Math.min(...dataset.data)) / this.calcScaler(dataset.data)))) + paddingTop)}
@@ -43,7 +37,7 @@ class LineChart extends AbstractChart {
     let output = [];
     config.data.map((dataset,index)=>{
       output.push (
-        <Polygon
+        <Svg.Polygon
           key={index}
           points={dataset.data.map((x, i) =>
             (paddingRight + (i * (width - paddingRight) / dataset.data.length)) +
@@ -75,7 +69,7 @@ class LineChart extends AbstractChart {
        (((height / 4 * 3 * (1 - ((x - Math.min(...dataset.data)) / this.calcScaler(dataset.data))))) + paddingTop))
 
       output.push (
-        <Polyline
+        <Svg.Polyline
           key = {index}
           points={points.join(' ')}
           fill="none"
@@ -120,7 +114,7 @@ class LineChart extends AbstractChart {
     config.data.map((dataset,index)=>{
       let result = this.getBezierLinePoints(dataset,config);
       output.push (
-          <Path
+          <Svg.Path
             key = {index}
             d={result}
             fill="none"
@@ -143,7 +137,7 @@ class LineChart extends AbstractChart {
       let d = this.getBezierLinePoints(dataset,config) +
       ` L${paddingRight + ((width - paddingRight) / dataset.data.length * (dataset.data.length - 1))},${(height / 4 * 3) + paddingTop} L${paddingRight},${(height / 4 * 3) + paddingTop} Z`
       output.push (
-        <Path
+        <Svg.Path
           key={index}
           d={d}
           fill="url(#fillShadowGradient)"
@@ -172,12 +166,12 @@ class LineChart extends AbstractChart {
           height={height}
           width={width}
         >
-          <G>
+          <Svg.G>
             {this.renderDefs({
               ...config,
               ...this.props.chartConfig
             })}
-            <Rect
+            <Svg.Rect
               width="100%"
               height={height}
               rx={borderRadius}
@@ -229,7 +223,7 @@ class LineChart extends AbstractChart {
               paddingTop,
               paddingRight
             })}
-          </G>
+          </Svg.G>
         </Svg>
       </View>
     )

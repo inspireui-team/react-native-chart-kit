@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 
 import {
-  LinearGradient,
-  Line,
-  Text,
-  Defs,
-  Stop
-} from 'react-native-svg'
+  Svg
+} from 'expo'
 
 class AbstractChart extends Component {
   calcScaler = data => (Math.max(...data) - Math.min(...data)) || 1
@@ -15,7 +11,7 @@ class AbstractChart extends Component {
     const { count, width, height, paddingTop, paddingRight } = config
     return [...new Array(count)].map((_, i) => {
       return (
-        <Line
+        <Svg.Line
           key={Math.random()}
           x1={paddingRight}
           y1={(height / 4 * i) + paddingTop}
@@ -34,7 +30,7 @@ class AbstractChart extends Component {
 	var decimalPlaces = (this.props.chartConfig.decimalPlaces !== undefined) ? this.props.chartConfig.decimalPlaces : 2;
     return [...new Array(count)].map((_, i) => {
       return (
-        <Text
+        <Svg.Text
           key={Math.random()}
           x={paddingRight - yLabelsOffset}
           textAnchor="end"
@@ -42,7 +38,7 @@ class AbstractChart extends Component {
           fontSize={12}
           fill={this.props.chartConfig.color(0.5)}
         >{count === 1 ? data[0].toFixed(2) : ((this.calcScaler(data) / (count - 1)) * i + Math.min(...data)).toFixed(2)}
-        </Text>
+        </Svg.Text>
       )
     })
   }
@@ -52,7 +48,7 @@ class AbstractChart extends Component {
     const fontSize = 12
     return labels.map((label, i) => {
       return (
-        <Text
+        <Svg.Text
           key={Math.random()}
           x={((width - paddingRight) / labels.length * (i)) + paddingRight + horizontalOffset}
           y={(height * 3 / 4) + paddingTop + (fontSize * 2)}
@@ -60,7 +56,7 @@ class AbstractChart extends Component {
           fill={this.props.chartConfig.color(0.5)}
           textAnchor="middle"
         >{label}
-        </Text>
+        </Svg.Text>
       )
     })
   }
@@ -69,7 +65,7 @@ class AbstractChart extends Component {
     const { data, width, height, paddingTop, paddingRight } = config
     return [...new Array(data.length)].map((_, i) => {
       return (
-        <Line
+        <Svg.Line
           key={Math.random()}
           x1={Math.floor((width - paddingRight) / data.length * (i) + paddingRight)}
           y1={0}
@@ -86,16 +82,16 @@ class AbstractChart extends Component {
   renderDefs = config => {
     const { width, height, backgroundGradientFrom, backgroundGradientTo } = config
     return (
-      <Defs>
-        <LinearGradient id="backgroundGradient" x1="0" y1={height} x2={width} y2={0}>
-          <Stop offset="0" stopColor={backgroundGradientFrom}/>
-          <Stop offset="1" stopColor={backgroundGradientTo}/>
-        </LinearGradient>
-        <LinearGradient id="fillShadowGradient" x1={0} y1={0} x2={0} y2={height}>
-          <Stop offset="0" stopColor={this.props.chartConfig.color()} stopOpacity="0.1"/>
-          <Stop offset="1" stopColor={this.props.chartConfig.color()} stopOpacity="0"/>
-        </LinearGradient>
-      </Defs>
+      <Svg.Defs>
+        <Svg.LinearGradient id="backgroundGradient" x1="0" y1={height} x2={width} y2={0}>
+          <Svg.Stop offset="0" stopColor={backgroundGradientFrom}/>
+          <Svg.Stop offset="1" stopColor={backgroundGradientTo}/>
+        </Svg.LinearGradient>
+        <Svg.LinearGradient id="fillShadowGradient" x1={0} y1={0} x2={0} y2={height}>
+          <Svg.Stop offset="0" stopColor={this.props.chartConfig.color()} stopOpacity="0.1"/>
+          <Svg.Stop offset="1" stopColor={this.props.chartConfig.color()} stopOpacity="0"/>
+        </Svg.LinearGradient>
+      </Svg.Defs>
     )
   }
 }

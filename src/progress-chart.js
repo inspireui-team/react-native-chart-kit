@@ -1,12 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import {
-  Svg,
-  Text,
-  G,
-  Rect,
-  Path
-} from 'react-native-svg'
+  Svg
+} from 'expo'
 import AbstractChart from './abstract-chart'
 
 const Pie = require('paths-js/pie')
@@ -58,19 +54,19 @@ class ProgressChart extends AbstractChart {
             height: this.props.height,
             ...this.props.chartConfig
           })}
-          <Rect
+          <Svg.Rect
             width="100%"
             height={this.props.height}
             rx={borderRadius}
             ry={borderRadius}
             fill="url(#backgroundGradient)"/>
-          <G
+          <Svg.G
             x={this.props.width / 2.5}
             y={this.props.height / 2}
           >
             {pieBackgrounds.map(pie => {
               return (
-                <Path
+                <Svg.Path
                   key={Math.random()}
                   d={pie.curves[0].sector.path.print()}
                   strokeWidth={16}
@@ -80,7 +76,7 @@ class ProgressChart extends AbstractChart {
             })}
             {pies.map((pie, i) => {
               return (
-                <Path
+                <Svg.Path
                   key={Math.random()}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -92,7 +88,7 @@ class ProgressChart extends AbstractChart {
             })}
             {pies.map((_, i) => {
               return (
-                <Rect
+                <Svg.Rect
                   key={Math.random()}
                   width="16"
                   height="16"
@@ -106,7 +102,7 @@ class ProgressChart extends AbstractChart {
             })}
             {pies.map((_, i) => {
               return (
-                <Text
+                <Svg.Text
                   key={Math.random()}
                   fill={this.props.chartConfig.color(0.5)}
                   fontSize="11"
@@ -114,9 +110,9 @@ class ProgressChart extends AbstractChart {
                   y={-(this.props.height / 2.5) + ((this.props.height * 0.8) / this.props.data.length * i) + 12*2}
                 >
                   {Math.round(100 * this.props.data[i]) + '%'}
-                </Text>)
+                </Svg.Text>)
             })}
-          </G>
+          </Svg.G>
         </Svg>
       </View>
     )

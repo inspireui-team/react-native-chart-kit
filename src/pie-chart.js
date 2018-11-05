@@ -1,12 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import {
-  Svg,
-  Rect,
-  Text,
-  G,
-  Path
-} from 'react-native-svg'
+  Svg
+} from 'expo'
 import AbstractChart from './abstract-chart'
 
 const Pie = require('paths-js/pie')
@@ -29,12 +25,12 @@ class PieChart extends AbstractChart {
     }, 0)
     const slices = chart.curves.map((c, i) => {
       return (
-        <G key={Math.random()}>
-          <Path
+        <Svg.G key={Math.random()}>
+          <Svg.Path
             d={c.sector.path.print()}
             fill={c.item.color}
           />
-          <Rect
+          <Svg.Rect
             width="16"
             height="16"
             fill={c.item.color}
@@ -43,14 +39,14 @@ class PieChart extends AbstractChart {
             x={(this.props.width / 2.5) - 24}
             y={-(this.props.height / 2.5) + ((this.props.height * 0.8) / this.props.data.length * i) + 12}
           />
-          <Text
+          <Svg.Text
             fill={c.item.legendFontColor}
             fontSize={c.item.legendFontSize}
             x={this.props.width / 2.5}
             y={-(this.props.height / 2.5) + ((this.props.height * 0.8) / this.props.data.length * i) + 12*2}
           >{Math.round(100 / total * c.item[this.props.accessor])}% { c.item.name }
-          </Text>
-        </G>
+          </Svg.Text>
+        </Svg.G>
       )
     })
     return (
@@ -71,13 +67,13 @@ class PieChart extends AbstractChart {
             height: this.props.height,
             ...this.props.chartConfig
           })}
-          <Rect width="100%" height={this.props.height} rx={borderRadius} ry={borderRadius} fill={backgroundColor}/>
-          <G
+          <Svg.Rect width="100%" height={this.props.height} rx={borderRadius} ry={borderRadius} fill={backgroundColor}/>
+          <Svg.G
             x={((this.props.width / 2) / 2) + Number((this.props.paddingLeft)?this.props.paddingLeft:0)}
             y={this.props.height / 2}
           >
             {slices}
-          </G>
+          </Svg.G>
         </Svg>
       </View>
     )
